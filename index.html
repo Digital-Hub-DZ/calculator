@@ -1,124 +1,245 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حاسبتي اللطيفة 🌸</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #fce4ec; /* خلفية وردية فاتحة جداً */
+            background-color: #fce4ec;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
-            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Cg fill="%23f48fb1" fill-opacity="0.2"%3E%3Cpath d="M40 0l-12 12-12-12-16 16 12 12-12 12 16 16 12-12 12 12 16-16-12-12 12-12-16-16zm-12 28l-8 8 8 8-8 8 8 8-8-8 8-8 8 8-8 8zm24 0l8 8-8 8 8 8-8 8 8-8-8-8 8-8-8 8z"%3E%3C/path%3E%3C/g%3E%3C/svg%3E'); /* خلفية بنمط زهور بسيط */
+            padding: 20px;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Cg fill="%23f48fb1" fill-opacity="0.2"%3E%3Cpath d="M40 0l-12 12-12-12-16 16 12 12-12 12 16 16 12-12 12 12 16-16-12-12 12-12-16-16zm-12 28l-8 8 8 8-8 8 8 8-8-8 8-8 8 8-8 8zm24 0l8 8-8 8 8 8-8 8 8-8-8-8 8-8-8 8z"%3E%3C/path%3E%3C/g%3E%3C/svg%3E');
+            background-size: 80px 80px;
         }
+        
         .calculator {
-            background-color: #f8bbd0; /* إطار وردي ناعم */
+            background: linear-gradient(145deg, #f8bbd0, #fce4ec);
             border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 15px 35px rgba(236, 64, 122, 0.3), inset 0 1px 0 rgba(255,255,255,0.5);
             padding: 30px;
-            width: 320px;
-            border: 5px solid #ec407a; /* حد وردي غامق */
+            width: 100%;
+            max-width: 340px;
+            border: 4px solid #ec407a;
+            position: relative;
+            overflow: hidden;
         }
+        
+        .calculator::before {
+            content: '🌸';
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 24px;
+            z-index: 1;
+        }
+        
         #display {
             width: 100%;
-            height: 60px;
-            font-size: 36px;
+            height: 70px;
+            font-size: 32px;
             text-align: right;
             border: none;
-            padding: 10px;
-            box-sizing: border-box;
-            border-radius: 15px;
-            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #fff, #f8f9fa);
             margin-bottom: 25px;
             color: #ad1457;
-            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: inset 0 3px 8px rgba(0,0,0,0.08), 0 2px 5px rgba(0,0,0,0.1);
+            font-weight: 500;
+            letter-spacing: 1px;
+            direction: ltr;
         }
+        
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
+            position: relative;
+            z-index: 2;
         }
+        
         button {
-            height: 60px;
+            height: 65px;
             border: none;
-            border-radius: 50%; /* أزرار دائرية */
-            font-size: 22px;
+            border-radius: 50%;
+            font-size: 24px;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
             color: white;
             position: relative;
+            user-select: none;
+            touch-action: manipulation;
         }
+        
         button:hover {
-            transform: scale(1.05);
+            transform: scale(1.08) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
         }
+        
         button:active {
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transform: translateY(2px);
+            transform: scale(0.98) translateY(1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
         }
-        /* ألوان الأزرار المختلفة */
-        .btn-number { background-color: #f48fb1; } /* وردي متوسط للأرقام */
-        .btn-operator { background-color: #f06292; } /* وردي أغمق للعمليات */
-        .btn-clear { background-color: #ff80ab; font-weight: bold; } /* وردي فاقع للمسح */
-        .btn-equal { background-color: #ad1457; grid-column: span 2; border-radius: 30px; } /* وردي غامق جداً للتساوي */
-
-        /* إضافة لمسة زهرة صغيرة للأزرار */
-        button::after {
-            content: "✿";
-            position: absolute;
-            font-size: 10px;
-            bottom: 5px;
-            right: 5px;
-            opacity: 0.5;
+        
+        /* ألوان الأزرار */
+        .btn-number { 
+            background: linear-gradient(145deg, #f48fb1, #f06292); 
         }
-        .btn-clear::after, .btn-equal::after { display: none; }
+        .btn-operator { 
+            background: linear-gradient(145deg, #ec407a, #d81b60); 
+        }
+        .btn-clear { 
+            background: linear-gradient(145deg, #ff80ab, #ff4081); 
+            font-size: 20px;
+        }
+        .btn-equal { 
+            background: linear-gradient(145deg, #ad1457, #880e4f); 
+            grid-column: span 2; 
+            border-radius: 25px; 
+            font-size: 28px;
+        }
+        
+        /* تأثيرات خاصة */
+        .btn-clear:hover {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 400px) {
+            .calculator {
+                padding: 25px 20px;
+                margin: 10px;
+            }
+            button {
+                height: 55px;
+                font-size: 20px;
+            }
+            #display {
+                font-size: 28px;
+                height: 60px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="calculator">
-        <input type="text" id="display" readonly>
+        <input type="text" id="display" readonly placeholder="0" value="0">
         <div class="buttons">
             <button class="btn-clear" onclick="clearDisplay()">C</button>
-            <button class="btn-operator" onclick="appendCharacter('/')">/</button>
-            <button class="btn-operator" onclick="appendCharacter('*')">*</button>
-            <button class="btn-operator" onclick="appendCharacter('-')">-</button>
-            <button class="btn-number" onclick="appendCharacter('7')">7</button>
-            <button class="btn-number" onclick="appendCharacter('8')">8</button>
-            <button class="btn-number" onclick="appendCharacter('9')">9</button>
-            <button class="btn-operator" onclick="appendCharacter('+')">+</button>
-            <button class="btn-number" onclick="appendCharacter('4')">4</button>
-            <button class="btn-number" onclick="appendCharacter('5')">5</button>
-            <button class="btn-number" onclick="appendCharacter('6')">6</button>
-            <button class="btn-number" onclick="appendCharacter('1')">1</button>
-            <button class="btn-number" onclick="appendCharacter('2')">2</button>
-            <button class="btn-number" onclick="appendCharacter('3')">3</button>
-            <button class="btn-number" onclick="appendCharacter('0')">0</button>
-            <button class="btn-equal" onclick="calculateResult()">=</button>
+            <button class="btn-operator" onclick="appendToDisplay('/')">÷</button>
+            <button class="btn-operator" onclick="appendToDisplay('*')">×</button>
+            <button class="btn-operator" onclick="appendToDisplay('-')">-</button>
+            
+            <button class="btn-number" onclick="appendToDisplay('7')">7</button>
+            <button class="btn-number" onclick="appendToDisplay('8')">8</button>
+            <button class="btn-number" onclick="appendToDisplay('9')">9</button>
+            <button class="btn-operator" onclick="appendToDisplay('+')">+</button>
+            
+            <button class="btn-number" onclick="appendToDisplay('4')">4</button>
+            <button class="btn-number" onclick="appendToDisplay('5')">5</button>
+            <button class="btn-number" onclick="appendToDisplay('6')">6</button>
+            <button class="btn-number" onclick="appendToDisplay('1')">1</button>
+            
+            <button class="btn-number" onclick="appendToDisplay('2')">2</button>
+            <button class="btn-number" onclick="appendToDisplay('3')">3</button>
+            <button class="btn-number" onclick="appendToDisplay('0')">0</button>
+            <button class="btn-equal" onclick="calculate()">=</button>
         </div>
     </div>
+
     <script>
         const display = document.getElementById('display');
+        let currentInput = '0';
+        let shouldResetDisplay = false;
 
-        function appendCharacter(char) {
-            display.value += char;
+        function appendToDisplay(value) {
+            if (shouldResetDisplay) {
+                currentInput = '';
+                shouldResetDisplay = false;
+            }
+            
+            // منع التكرار المستمر للعمليات
+            if (['+', '-', '*', '/'].includes(value) && 
+                ['+', '-', '*', '/'].includes(currentInput.slice(-1))) {
+                return;
+            }
+            
+            currentInput += value;
+            display.value = currentInput;
         }
 
         function clearDisplay() {
-            display.value = '';
+            currentInput = '0';
+            display.value = '0';
+            shouldResetDisplay = false;
         }
 
-        function calculateResult() {
+        function calculate() {
             try {
-                // استخدام eval بحذر (لأغراض بسيطة مثل هذه)
-                display.value = eval(display.value);
+                // استبدال الرموز لتتوافق مع JavaScript
+                let expression = currentInput
+                    .replace(/×/g, '*')
+                    .replace(/÷/g, '/');
+                
+                let result = Function('"use strict"; return (' + expression + ')')();
+                
+                if (!isFinite(result)) {
+                    throw new Error('غير صالح');
+                }
+                
+                currentInput = result.toString();
+                display.value = currentInput;
+                shouldResetDisplay = true;
+                
             } catch (error) {
                 display.value = 'خطأ';
+                currentInput = '0';
+                shouldResetDisplay = true;
+                setTimeout(clearDisplay, 1500);
             }
         }
+
+        // دعم لوحة المفاتيح
+        document.addEventListener('keydown', function(e) {
+            const key = e.key;
+            
+            if (key >= '0' && key <= '9' || key === '.') {
+                appendToDisplay(key);
+            } else if (key === '+' || key === '-') {
+                appendToDisplay(key);
+            } else if (key === '*') {
+                appendToDisplay('×');
+            } else if (key === '/') {
+                appendToDisplay('÷');
+            } else if (key === 'Enter' || key === '=') {
+                calculate();
+            } else if (key === 'Escape' || key === 'c' || key === 'C') {
+                clearDisplay();
+            }
+        });
+
+        // منع التحديد عند الضغط الطويل
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('contextmenu', e => e.preventDefault());
+        });
     </script>
 </body>
 </html>
