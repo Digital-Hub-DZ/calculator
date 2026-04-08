@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبتي اللطيفة 🌸</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fce4ec; /* خلفية وردية فاتحة جداً */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Cg fill="%23f48fb1" fill-opacity="0.2"%3E%3Cpath d="M40 0l-12 12-12-12-16 16 12 12-12 12 16 16 12-12 12 12 16-16-12-12 12-12-16-16zm-12 28l-8 8 8 8-8 8 8 8-8-8 8-8 8 8-8 8zm24 0l8 8-8 8 8 8-8 8 8-8-8-8 8-8-8 8z"%3E%3C/path%3E%3C/g%3E%3C/svg%3E'); /* خلفية بنمط زهور بسيط */
+        }
+        .calculator {
+            background-color: #f8bbd0; /* إطار وردي ناعم */
+            border-radius: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            padding: 30px;
+            width: 320px;
+            border: 5px solid #ec407a; /* حد وردي غامق */
+        }
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 36px;
+            text-align: right;
+            border: none;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 15px;
+            background-color: #fff;
+            margin-bottom: 25px;
+            color: #ad1457;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        button {
+            height: 60px;
+            border: none;
+            border-radius: 50%; /* أزرار دائرية */
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            color: white;
+            position: relative;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:active {
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transform: translateY(2px);
+        }
+        /* ألوان الأزرار المختلفة */
+        .btn-number { background-color: #f48fb1; } /* وردي متوسط للأرقام */
+        .btn-operator { background-color: #f06292; } /* وردي أغمق للعمليات */
+        .btn-clear { background-color: #ff80ab; font-weight: bold; } /* وردي فاقع للمسح */
+        .btn-equal { background-color: #ad1457; grid-column: span 2; border-radius: 30px; } /* وردي غامق جداً للتساوي */
+
+        /* إضافة لمسة زهرة صغيرة للأزرار */
+        button::after {
+            content: "✿";
+            position: absolute;
+            font-size: 10px;
+            bottom: 5px;
+            right: 5px;
+            opacity: 0.5;
+        }
+        .btn-clear::after, .btn-equal::after { display: none; }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" readonly>
+        <div class="buttons">
+            <button class="btn-clear" onclick="clearDisplay()">C</button>
+            <button class="btn-operator" onclick="appendCharacter('/')">/</button>
+            <button class="btn-operator" onclick="appendCharacter('*')">*</button>
+            <button class="btn-operator" onclick="appendCharacter('-')">-</button>
+            <button class="btn-number" onclick="appendCharacter('7')">7</button>
+            <button class="btn-number" onclick="appendCharacter('8')">8</button>
+            <button class="btn-number" onclick="appendCharacter('9')">9</button>
+            <button class="btn-operator" onclick="appendCharacter('+')">+</button>
+            <button class="btn-number" onclick="appendCharacter('4')">4</button>
+            <button class="btn-number" onclick="appendCharacter('5')">5</button>
+            <button class="btn-number" onclick="appendCharacter('6')">6</button>
+            <button class="btn-number" onclick="appendCharacter('1')">1</button>
+            <button class="btn-number" onclick="appendCharacter('2')">2</button>
+            <button class="btn-number" onclick="appendCharacter('3')">3</button>
+            <button class="btn-number" onclick="appendCharacter('0')">0</button>
+            <button class="btn-equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+
+        function appendCharacter(char) {
+            display.value += char;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculateResult() {
+            try {
+                // استخدام eval بحذر (لأغراض بسيطة مثل هذه)
+                display.value = eval(display.value);
+            } catch (error) {
+                display.value = 'خطأ';
+            }
+        }
+    </script>
+</body>
+</html>
